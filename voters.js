@@ -21,16 +21,10 @@ const isYOUNG = (age) => age >= YOUNG.start && age <= YOUNG.end
 const isMID = (age) => age >= MID.start && age <= MID.end
 const isOLD = (age) => age >= OLD.start && age <= OLD.end
 
-function checkIfVoted(acc, voted, people, votes){
-    if(acc[people]){
-        if(voted){
-            return {...acc, [people]: acc[people] + 1, [votes]: acc[votes] + 1}
-        }
-        else{
-            return {...acc, [people]: acc[people] + 1}
-        }
-    } else{return {...acc, [people]:1, [votes]: 1}}
-}
+const checkIfVoted = (acc, voted, people, votes) => (
+    voted? {...acc, [people]: acc[people] + 1, [votes]: acc[votes] + 1}
+    : {...acc, [people]: acc[people] + 1}
+)
 
 const result = voters.reduce(
     (acc, {age, voted})=> {
@@ -43,8 +37,7 @@ const result = voters.reduce(
 
         return acc
     }
-    ,{}
+    ,{YoungPeople: 0, YoungVoters:0, MidPeople: 0, MidVoters: 0, OldPeople: 0, OldVoters:0}
 )
 
 console.log(result)
-
