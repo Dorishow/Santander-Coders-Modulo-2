@@ -28,8 +28,8 @@
                 setToCalculator('operator', data)
                 nextEnterWillBe('n2')
             }
+            else{nextEnterWillBe('n1')}
         }
-        else{console.log('caractere inválido')}
     }
     
     function equals(){
@@ -37,6 +37,10 @@
             history = [...history, {...calc, resultado: calculate(calc)}]
             nextEnterWillBe('n1')
             return console.log(calculate(calc))
+        }
+        else{
+            nextEnterWillBe('n1')
+            return console.log('A ordem de entrada deve ser => Número 1 => Operador => Número 2')
         }
     }
 
