@@ -1,40 +1,86 @@
-let calculo = {n1: 0, operador: '', n2: 0}
-    let contador = 0
-    let lista = []
+    const calculadora = (() =>{let calc = {n1: 0, operator: '', n2: 0}
+    let EnterController = 'n1'
+    let history = []
+
+    const isNumber = (n) => typeof n == 'number'
+    const isString = (n) => typeof n == 'string'
+
+    const isFirstNumber = (EnterController) => EnterController === 'n1'
+    const isOperator = (EnterController) => EnterController === 'operator'
+    const isSecondNumber = (EnterController) => EnterController === 'n2'
+
+    const setToCalculator = (prop, data) => calc = {...calc, [prop]: data}
+    const nextEnterWillBe = (value) => EnterController = value
 
     function enter(data){
-        if(typeof data == 'number'){
-            if(contador === 0){
-                calculo = {...calculo, n1: data}
-                contador = contador + 1
+        if(isNumber(data)){
+            if(isFirstNumber(EnterController)){
+                setToCalculator('n1', data)
+                nextEnterWillBe('operator')
             }
-            else if(contador === 2){
-                calculo = {...calculo, n2: data}
+            else if(isSecondNumber(EnterController)){
+                setToCalculator('n2', data)
             }
-            else{contador = 0}
+            else{nextEnterWillBe('n1')}
         }
-        else if(typeof data == 'string'){
-            if(contador === 1){
-                calculo = {...calculo, operador: data}
-                contador = contador + 1
+        else if(isString(data)){
+            if(isOperator(EnterController)){
+                setToCalculator('operator', data)
+                nextEnterWillBe('n2')
             }
         }
         else{console.log('caractere inválido')}
     }
     
     function equals(){
-        if(contador === 2){
-            lista = [...lista, {'n1': calculo.n1, 'operacao': calculo.operador, 'n2': calculo.n2}]
-            contador = 0
-            return calculate(calculo)
-            
-            contador = 0
+        if(EnterController === 'n2'){
+            history = [...history, {...calc, resultado: calculate(calc)}]
+            nextEnterWillBe('n1')
+            return console.log(calculate(calc))
         }
     }
+
+    const list = () => console.log(history)
+
+    const reset = () => history = []
     
-    function calculate({n1, operador, n2}){
-        if(operador === '+') return n1 + n2
-        if(operador === '-') return n1 - n2
-        if(operador === '*') return n1 * n2
-        if(operador === '/') return n1 / n2
+    function calculate({n1, operator, n2}){
+        if(operator === '+') return n1 + n2
+        if(operator === '-') return n1 - n2
+        if(operator === '*') return n1 * n2
+        if(operator === '/') return n1 / n2
+        else return 'operator inválido'
     }
+    
+    return {
+        enter, equals, list, reset
+    }
+
+})()
+
+
+    calculadora.enter(5)
+    calculadora.enter('+')
+    calculadora.enter(2)
+    calculadora.equals()
+
+    calculadora.enter(2)
+    calculadora.enter('+')
+    calculadora.enter(2)
+    calculadora.equals()
+
+    calculadora.enter(5)
+    calculadora.enter('*')
+    calculadora.enter(2)
+    calculadora.equals()
+
+    calculadora.enter(5)
+    calculadora.enter('/')
+    calculadora.enter(2)
+    calculadora.equals()
+
+    calculadora.list()
+
+    calculadora.reset()
+
+    calculadora.list()
