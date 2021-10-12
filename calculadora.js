@@ -1,6 +1,6 @@
-    const calculadora = (() =>{let calc = {
+    const calculadora = (() =>{
         
-        n1: 0, operator: '', n2: 0}
+        let calc = { n1: 0, operator: '', n2: 0 }
         let EnterController = 'n1'
         let history = []
 
