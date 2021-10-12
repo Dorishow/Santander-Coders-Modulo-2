@@ -1,4 +1,6 @@
-    const calculadora = (() =>{let calc = {n1: 0, operator: '', n2: 0}
+const calculadora = (() =>{
+    
+    let calc = {n1: 0, operator: '', n2: 0}
     let EnterController = 'n1'
     let history = []
 
@@ -21,10 +23,14 @@
             else if(isSecondNumber(EnterController)){
                 setToCalculator('n2', data)
             }
-            else{nextEnterWillBe('n1')}
+            else{
+                setToCalculator('n1', data)
+                nextEnterWillBe('operator')
+            }
         }
         else if(isString(data)){
             if(isOperator(EnterController)){
+                console.log('operator => ' + data)
                 setToCalculator('operator', data)
                 nextEnterWillBe('n2')
             }
@@ -62,15 +68,14 @@
 
 })()
 
-
     calculadora.enter(5)
     calculadora.enter('+')
-    calculadora.enter(2)
+    calculadora.enter(1)
     calculadora.equals()
 
     calculadora.enter(2)
-    calculadora.enter('+')
-    calculadora.enter(2)
+    calculadora.enter('-')
+    calculadora.enter(1)
     calculadora.equals()
 
     calculadora.enter(5)
@@ -81,6 +86,21 @@
     calculadora.enter(5)
     calculadora.enter('/')
     calculadora.enter(2)
+    calculadora.equals()
+
+    calculadora.enter(5)
+    calculadora.enter(5)
+    calculadora.enter(2)
+    calculadora.equals()
+
+    calculadora.enter(5)
+    calculadora.enter(5)
+    calculadora.enter('-')
+    calculadora.equals()
+
+    calculadora.enter('-')
+    calculadora.enter(5)
+    calculadora.enter('-')
     calculadora.equals()
 
     calculadora.list()
