@@ -30,7 +30,6 @@ const calculadora = (() =>{
         }
         else if(isString(data)){
             if(isOperator(EnterController)){
-                console.log('operator => ' + data)
                 setToCalculator('operator', data)
                 nextEnterWillBe('n2')
             }
@@ -40,7 +39,7 @@ const calculadora = (() =>{
     
     function equals(){
         if(EnterController === 'n2'){
-            history = [...history, {...calc, resultado: calculate(calc)}]
+            history = [...history, {...calc, result: calculate(calc)}]
             nextEnterWillBe('n1')
             return console.log(calculate(calc))
         }
@@ -50,7 +49,9 @@ const calculadora = (() =>{
         }
     }
 
-    const list = () => console.log(history)
+    const list = () => history.forEach(
+        ({n1, operator, n2, result}) => console.log(`${n1} ${operator} ${n2} = ${result}`)
+    )
 
     const reset = () => history = []
     
@@ -88,23 +89,8 @@ const calculadora = (() =>{
     calculadora.enter(2)
     calculadora.equals()
 
-    calculadora.enter(5)
-    calculadora.enter(5)
-    calculadora.enter(2)
-    calculadora.equals()
-
-    calculadora.enter(5)
-    calculadora.enter(5)
-    calculadora.enter('-')
-    calculadora.equals()
-
-    calculadora.enter('-')
-    calculadora.enter(5)
-    calculadora.enter('-')
-    calculadora.equals()
-
     calculadora.list()
 
     calculadora.reset()
-
+    
     calculadora.list()
